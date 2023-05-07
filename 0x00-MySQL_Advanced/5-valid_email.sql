@@ -2,4 +2,7 @@
 CREATE TRIGGER validate_email
 AFTER UPDATE ON users
 FOR EACH ROW
-UPDATE users SET valid_email WHERE = NEW.email;
+IF NEW.email <> OLD.email
+THEN
+    UPDATE users SET valid_email = 1 WHERE = NEW.email;
+END IF;
