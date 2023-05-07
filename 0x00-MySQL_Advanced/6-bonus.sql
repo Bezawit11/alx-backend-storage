@@ -6,6 +6,6 @@ BEGIN
   THEN
       INSERT INTO projects (name) values (project_name);
   END IF;
-  SET project_id = SELECT id FROM projects WHERE name = project_name; 
+  SET project_id = (SELECT id FROM projects WHERE name = project_name); 
   INSERT INTO Corrections (user_id, project_id, score) values (user_id, project_id, score);
 END
