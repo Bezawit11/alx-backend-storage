@@ -1,11 +1,11 @@
 -- script that creates a function SafeDiv
 CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS DATE
-   DETERMINISTIC
-   BEGIN
-        IF (b) = 0
+RETURNS FLOAT DETERMINISTIC
+BEGIN
+    IF (b = 0)
     THEN
-         return 0;
+         RETURN (0);
+    ELSE
+         RETURN (a / b);
     END IF;
-         return a / b;
    END
