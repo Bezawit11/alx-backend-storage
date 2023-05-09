@@ -14,7 +14,8 @@ def top_students(mongo_collection):
     a = 0
     for i in mongo_collection.find({}):
         d['name'] = i.get('name')
-        for j in i.get('topics'):
+        d['ss'] = i.get('topics')
+        for i in d['ss']:
             s += j['score']
             a += 1
         avg = s / a
