@@ -18,6 +18,8 @@ def top_students(mongo_collection):
             s += j['score']
             a += 1
         avg = s / a
+        s = 0
+        a = 0
         d['averagescore'] = avg
         m.append(d)
         d = {}
