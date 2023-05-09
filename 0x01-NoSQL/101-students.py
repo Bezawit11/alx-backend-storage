@@ -7,21 +7,12 @@ from pymongo import MongoClient
 
 def top_students(mongo_collection):
     """returns all students sorted by average score"""
-    m = []
-    k = []
-    d = {}
-    s = 0
-    a = 0
-    for i in mongo_collection.find({}):
-        d['name'] = i.get('name')
-        d['ss'] = i.get('topics')
-        for i in d['ss']:
-            s += j['score']
-            a += 1
-        avg = s / a
-        s = 0
-        a = 0
-        d['averagescore'] = avg
-        m.append(d)
-        d = {}
-    return m
+    a = mongo_collection.aggregate([
+        { "$group": {
+                "name": "$name",
+                "averageScore": {"$avg": "$topics.score"}
+            }
+        },
+        { "$sort": {"averageScore": -1}}
+    ])
+    return a
