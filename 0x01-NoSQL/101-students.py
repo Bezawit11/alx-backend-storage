@@ -14,11 +14,11 @@ def top_students(mongo_collection):
     a = 0
     for i in mongo_collection.find({}):
         d['name'] = i.get('name')
-            for j in i.get('topics'):
-                s += j['score']
-                a += 1
-            avg = s / a
-            d['averagescore'] = avg
-            m.append(d)
-            d = {}
+        for j in i.get('topics'):
+            s += j['score']
+            a += 1
+        avg = s / a
+        d['averagescore'] = avg
+        m.append(d)
+        d = {}
     return m
