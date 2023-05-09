@@ -11,5 +11,6 @@ def update_topics(mongo_collection, name, topics):
     for c in m:
         if c.get('name') == name:
             myquery = {c.get('name'): c.get('topics', "")}
+            break
     newvalues = { "$set": {name: topics}}
     mongo_collection.update_one(myquery, newvalues)
