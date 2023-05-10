@@ -4,7 +4,7 @@ DELIMITER $$
 CREATE PROCEDURE ComputeAverageWeightedScoreForUser(
     IN user_id INT)
 BEGIN
-    SELECT c.user_id, c.score * p.weight
+    SELECT c.user_id, SUM(c.score * p.weight) / SUM(p.weight)
     FROM corrections c
     INNER JOIN projects p
     ON p.project_id = c.user_id
