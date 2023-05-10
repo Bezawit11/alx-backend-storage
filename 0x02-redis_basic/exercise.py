@@ -8,11 +8,11 @@ import uuid
 
 class Cache:
     def __init__(self):
-        _redis = redis.Redis()
-        _redis.flushdb()
+        self._redis = redis.Redis()
+        #_redis.flushdb()
 
     def store(self, data):
-        a = uuid.uuid1()
-        self._redis.mset(a, data)
+        a = str(uuid.uuid1())
+        self._redis.set(a, data)
         return a
 
