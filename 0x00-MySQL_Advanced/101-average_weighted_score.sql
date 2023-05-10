@@ -15,6 +15,7 @@ BEGIN
     ON p.id = c.project_id)
     WHERE c.user_id = b;
     UPDATE users SET average_score = avg_score WHERE id = b;
+    SET b += 1;
 END
 $$
 DELIMITER ;
