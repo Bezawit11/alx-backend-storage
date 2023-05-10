@@ -11,6 +11,7 @@ class Cache:
         _redis = redis.Redis()
 
     def store(self, data):
-        self._redis.set(uuid.uuid1(), data)
-        return self._redis 
+        a = uuid.uuid1()
+        self._redis.set(a, data)
+        return a
 
