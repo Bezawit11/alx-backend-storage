@@ -7,8 +7,7 @@ BEGIN
     UPDATE users SET average_score = (SELECT SUM(c.score * p.weight) / SUM(p.weight)
     FROM corrections c
     INNER JOIN projects p
-    ON p.id = c.project_id)
-    WHERE c.user_id = b;
+    ON p.id = c.project_id);
 END
 $$
 DELIMITER ;
