@@ -4,7 +4,7 @@
 
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable
 
 
 class Cache:
@@ -16,4 +16,6 @@ class Cache:
         a = str(uuid.uuid1())
         self._redis.set(a, data)
         return a
+
+    def get(self, key, fn: Callable):
 
