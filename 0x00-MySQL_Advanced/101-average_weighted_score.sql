@@ -7,7 +7,7 @@ CREATE PROCEDURE ComputeAverageWeightedScoreForUser()
     DECLARE avg_score FLOAT;
     DECLARE b INT = 1;
     SET RowCnt = (SELECT COUNT(*) FROM corrections);
-    WHILE b <= @RowCnt
+    WHILE b <= RowCnt
 BEGIN    
     SET avg_score = (SELECT SUM(c.score * p.weight) / SUM(p.weight)
     FROM corrections c
