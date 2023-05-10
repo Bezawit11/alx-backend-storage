@@ -18,4 +18,4 @@ class Cache:
         return a
 
     def get(self, key, fn: Callable):
-
+        return self_redis.get(key)
