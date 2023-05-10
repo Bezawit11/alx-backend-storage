@@ -12,6 +12,6 @@ class Cache:
 
     def store(self, data):
         a = uuid.uuid1()
-        self._redis.set(a, data)
+        self._redis.mset(a, data)
         return a
 
