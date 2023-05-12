@@ -20,3 +20,11 @@ class Cache:
     def get(self, key, fn: Callable):
         return self_redis.get(key)
 
+    def get_str(self, key):
+        return self.get(key)
+    
+    def get_int(self, key):
+        try:
+            return int(self.get(key))
+        except:
+            return self.get(key)
