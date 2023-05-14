@@ -18,6 +18,7 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs)
     return wrapper
 
+
 def call_history(method: Callable) -> Callable:
     """decorator to store the history of inputs and outputs of func"""
     inputs = method.__qualname__ + ":inputs"
@@ -33,15 +34,18 @@ def call_history(method: Callable) -> Callable:
         return o
     return wrapper
 
+
 def replay(method: Callable) -> None:
     """display the history of calls of a particular function"""
     local_redis = redis.Redis()
     n = local_redis.get(method.__qualname__).decode("utf-8")
-    print("{} was called {} times:".format(method.__qualname__), n)
-    inputs = local_redis.lrange("{}:inputs".format(method.__qualname__), 0, -1)
-    outputs = local_redis.lrange("{}:outputs".format(method.__qualname__), 0, -1)
+    m = method.__qualname__
+    print("{} was called {} times:".format(m, n)
+    inputs = local_redis.lrange("{}:inputs".format(m), 0, -1)
+    outputs = local_redis.lrange("{}:outputs".format(m), 0, -1)
     for i, j in zip(inputs, outputs):
-        print("{}(*{}) -> {}".format(method.__qualname__, i.decode("utf-8"), j.decode("utf-8")))
+        print("{}(*{}) -> {}".format(m, i.decode("utf-8"), j.decode("utf-8")))
+
 
 class Cache:
     """store an instance of the Redis client as a private variable
@@ -52,7 +56,7 @@ class Cache:
         """Initialization"""
         self._redis = redis.Redis()
         self._redis.flushdb()
- 
+
     @count_calls
     @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
