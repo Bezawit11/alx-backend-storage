@@ -22,8 +22,9 @@ def count_calls(method: Callable) -> Callable:
         if v:
             return str(v)
         else:
-            r.setex(k, 10, method(url))
-            return method(url)
+            a = method(url)
+            r.setex(k, 10, a)
+            return a
     return wrapper
 
 @count_calls
