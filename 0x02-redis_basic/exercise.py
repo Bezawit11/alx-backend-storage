@@ -81,5 +81,5 @@ class Cache:
         """"parametrzes"""
         try:
             return int(self.get(key))
-        except:
+        except ValueError:
             return self.get(key)
