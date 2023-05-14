@@ -11,6 +11,7 @@ from functools import wraps
 
 def count_calls(fn: Callable) -> Callable:
     """count how many times methods of the Cache class are called"""
+    
     @wraps(fn)
     def wrapper(self, *args, **kwargs):
         k = fn.__qualname__
