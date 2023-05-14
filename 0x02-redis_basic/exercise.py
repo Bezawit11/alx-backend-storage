@@ -10,11 +10,11 @@ from typing import Union, Callable, Optional
 def count_calls(fn: Callable) -> Callable:
     """count how many times methods of the Cache class are called"""
     @wraps(fn)
-    def wrap(self, *args, **kwargs):
+    def wrapper(self, *args, **kwargs):
         k = fn.__qualname__
         self._redis.incr(k)
         return fn(self, *args, **kwargs)
-    return wrap
+    return wrapper
 
 
 
