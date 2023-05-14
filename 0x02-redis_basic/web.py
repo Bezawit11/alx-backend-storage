@@ -19,7 +19,7 @@ def count_calls(method: Callable) -> Callable:
         k = "count:{}".format(url)
         r.incr(k)
         v = r.get(k)
-        if k:
+        if v:
             return str(v)
         else:
             r.setex(k, 10, method(url))
