@@ -18,7 +18,11 @@ class Cache:
         return a
 
     def get(self, key, fn: Optional[Callable] = None):
-        return self._redis.get(key)
+        v = self._redis.get(key)
+        if not fn:
+            return v
+        else:
+            return fn(v)
 
     def get_str(self, key):
         return self.get(key)
