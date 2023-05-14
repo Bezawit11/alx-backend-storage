@@ -4,7 +4,7 @@
 
 import redis
 import uuid
-from typing import Union, Callable
+from typing import Union, Callable, Optional
 
 
 class Cache:
@@ -17,7 +17,7 @@ class Cache:
         self._redis.set(a, data)
         return a
 
-    def get(self, key, fn: Callable):
+    def get(self, key, fn: Optional[Callable] = None):
         return self_redis.get(key)
 
     def get_str(self, key):
