@@ -26,7 +26,7 @@ def counter(method: Callable) -> Callable:
     return wrapper
 
 @counter
-def get_page(url: str) -> str:
+def get_page(url):
     """Implementing an expiring web cache and tracker"""
     x = requests.get(url)
     k = "count:{}".format(url)
