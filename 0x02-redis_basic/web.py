@@ -11,7 +11,7 @@ from typing import Union, Callable
 r = redis.Redis()
 
 
-def count_calls(method: Callable) -> Callable:
+def counter(method: Callable) -> Callable:
     """count how many times methods of the Cache class are called"""
     @wraps(method)
     def wrapper(url):
@@ -21,13 +21,12 @@ def count_calls(method: Callable) -> Callable:
         v = r.get(k)
         if v:
             return v.decode('utf-8')
-        else:
-            a = method(url)
-            r.setex(k, 10, a)
-            return a
+        a = method(url)
+        r.setex(k, 10, a)
+        return a
     return wrapper
 
-@count_calls
+@counter
 def get_page(url: str) -> str:
     """Implementing an expiring web cache and tracker""""
     x = requests.get(url)
