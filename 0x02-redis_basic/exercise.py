@@ -33,6 +33,15 @@ def call_history(method: Callable) -> Callable:
         return o
     return wrapper
 
+def replay(method: Callable) - None:
+    """"""
+    local_redis = redis.Redis()
+    n = local_redis.get(method.__qualname__).decode("utf-8")
+    print("{} was called {} times:".format(method.__qualname__), n)
+    inputs = local_redis.lrange("{}:inputs".format(method.__qualname__), 0, -1)
+    outputs = local_redis.lrange("{}:outputs".format(method.__qualname__), 0, -1)
+    for i, j in zip(inputs, outputs):
+        print("{}(*{}) -> {}".format(method.__qualname__, i.decode("utf-8"), j.decode("utf-8")))
 
 class Cache:
     def __init__(self):
