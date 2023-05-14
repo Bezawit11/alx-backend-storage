@@ -16,12 +16,12 @@ def counter(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(url):  # sourcery skip: use-named-expression
         """"increments value everytime the functin in called"""
-        redis_.incr(f"count:{url}")
-        cached_html = redis_.get(f"cached:{url}")
+        r.incr(f"count:{url}")
+        cached_html = r.get(f"cached:{url}")
         if cached_html:
             return cached_html.decode('utf-8')
         html = method(url)
-        redis_.setex(f"cached:{url}", 10, html)
+        r.setex(f"cached:{url}", 10, html)
         return html
         #k = "count:{}".format(url)
         #r.incr(k)
