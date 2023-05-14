@@ -20,7 +20,7 @@ def count_calls(method: Callable) -> Callable:
         r.incr(k)
         v = r.get(k)
         if v:
-            return str(v)
+            return v.decode('utf-8')
         else:
             a = method(url)
             r.setex(k, 10, a)
