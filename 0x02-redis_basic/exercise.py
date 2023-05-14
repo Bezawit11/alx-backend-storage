@@ -9,14 +9,14 @@ from functools import wraps
 
 
 
-def count_calls(fn: Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """count how many times methods of the Cache class are called"""
     
-    @wraps(fn)
+    @wraps(method)
     def wrapper(self, *args, **kwargs):
         k = fn.__qualname__
         self._redis.incr(k)
-        return fn(self, *args, **kwargs)
+        return method(self, *args, **kwargs)
     return wrapper
 
 
