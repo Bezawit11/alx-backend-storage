@@ -7,11 +7,23 @@ import uuid
 from typing import Union, Callable, Optional
 
 
+def count_calls(fn: Callable) -> Callable:
+    """count how many times methods of the Cache class are called"""
+    def wrap(self, *args, **kwargs):
+        k = fn.__qualname__
+        self.incr(k)
+        return fn(self, *args, **kwargs)
+    return wrap
+
+
+
+
 class Cache:
     def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
-
+        
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         a = str(uuid.uuid1())
         self._redis.set(a, data)
