@@ -21,12 +21,16 @@ def count_calls(method: Callable) -> Callable:
 
 def call_history(method: Callable) -> Callable:
     """decorator to store the history of inputs and outputs of func"""
+    inputs = method.__qualname__ + ":inputs"
+    outputs = method.__qualname__ + ":outputs"
     
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         k = method.__qualname__
-        self._redis.lpush(k)
-        return method(self, *args, **kwargs)
+        self._redis.lpush(inputs, srgs)
+        o = method(self, *args, **kwargs)
+        self._redis.lpush(outputs, str(o))
+        return o
     return wrapper
 
 
@@ -36,6 +40,7 @@ class Cache:
         self._redis.flushdb()
         
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         a = str(uuid.uuid1())
         self._redis.set(a, data)
