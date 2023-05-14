@@ -22,7 +22,7 @@ def counter(method: Callable) -> Callable:
             return v.decode('utf-8')
         a = method(url)
         r.setex(k, 10, a)
-        return a
+        return a.text
     return wrapper
 
 @counter
